@@ -25,9 +25,24 @@ const PORT = 3333
     ALÉM DISSO, todos os itens devem ser validados separadamente, fornecendo uma resposta para a pessoa usuária. 
 
 */
-
+let pessoasBibliotecarias = []
+let registroAutomatizado = 1
 app.post('/bibliotecaria',(request, response)=>{
-    
+    const {nome, senha} = request.body
+
+    if(!nome){
+        response.status(400).send(JSON.stringify({Mensagem: 'Favor informar um nome válido!'}))
+    }
+    if(!senha){
+        response.status(400).send(JSON.stringify({Mensagem: 'Favor informar uma senha válida!'}))
+    }
+
+    let novaPessoa = {id:registroAutomatizado, nome:nome, senha:senha}
+
+    pessoasBibliotecarias.push(novaPessoa)
+    registroAutomatizado++
+
+    response.status(201).send(JSON.stringify({Mensagem: 'Pessoa bibliotecária registrada com sucesso!'}))
 })
 
 //--------------- LER PESSOA BIBLIOTECÁRIA ------------------
